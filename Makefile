@@ -15,13 +15,21 @@ CFLAGS	= -MMD -Wall -std=gnu99 -O2 -march=i386 -mtune=i586 -ffast-math -fomit-fr
 	-DSQLITE_OMIT_WAL=1 \
 	-DSQLITE_OMIT_LOAD_EXTENSION=1 \
 	-DSQLITE_ENABLE_8_3_NAMES=2 \
-	-DSQLITE_ENABLE_LOCKING_STYLE=0
+	-DSQLITE_ENABLE_LOCKING_STYLE=0 \
+	-DSQLITE_ENABLE_FTS5=1 \
+	-DSQLITE_ENABLE_JSON1=1 \
+	-DHAVE_NANOSLEEP=0 \
+	-DSQLITE_NO_SYNC=1 \
+	-DHAVE_USLEEP=1
+
 LIBS    = -lm -lemu
 LDFLAGS =
 EXE     = sqlite.exe
 PARTS   = sqlite3.o shell.o
 
-%.o: %.c
+all: $(EXE)
+
+%.o: %.c Makefile
 	$(CC) -o $@ -c $(CFLAGS) $<
 
 $(EXE): $(PARTS)
